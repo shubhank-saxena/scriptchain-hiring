@@ -13,6 +13,7 @@ djangorestframework-simplejwt = "*"
 drf-yasg = "*"
 factory-boy = "*"
 django-debug-toolbar = "*"
+gunicorn = "*"
 
 [dev-packages]
 
