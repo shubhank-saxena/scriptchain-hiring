@@ -31,9 +31,9 @@ class BlogDetailViewset(generics.ListAPIView):
         # # Worst run
         # queryset = Blog.objects.all()
 
-        # # Better run
+        # Better run
         # queryset = Blog.objects.select_related('author').all()
-
+        #
         # Best Run
         queryset = (
             Blog.objects.select_related("author")
