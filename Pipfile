@@ -11,6 +11,7 @@ python-dotenv = "*"
 whitenoise = "*"
 djangorestframework-simplejwt = "*"
 drf-yasg = "*"
+factory-boy = "*"
 
 [dev-packages]
 
