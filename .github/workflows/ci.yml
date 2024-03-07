@@ -68,4 +68,8 @@ jobs:
     
     - name: Run docker compose
       run: |
-        ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd /home/ubuntu/project && docker compose up --scale web=2 --no-deps --no-recreate -d && sleep 10 && docker compose -f up --scale web=1 --no-deps -d"
+        - name: SSH and run docker compose
+          run: |
+            echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
+            chmod 600 ec2_key.pem
+            ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd /home/ubuntu/project && docker compose up --scale web=2 --no-deps --no-recreate -d && sleep 10 && docker compose -f up --scale web=1 --no-deps -d"
