@@ -72,4 +72,4 @@ jobs:
           run: |
             echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
             chmod 600 ec2_key.pem
-            ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd /home/ubuntu/project && docker compose up --scale web=2 --no-deps --no-recreate -d && sleep 10 && docker compose -f up --scale web=1 --no-deps -d"
+            ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd /home/ubuntu/project && docker compose up --scale web=2 --no-deps --no-recreate -d && sleep 10 && docker compose up --scale web=1 --no-deps -d"
