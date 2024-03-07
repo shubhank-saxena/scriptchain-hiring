@@ -36,3 +36,32 @@ jobs:
       run: |
         pip install pre-commit
         pre-commit run --all-files
+    
+    - name: Create .env file
+      run: |
+        touch .env
+
+    - name: Copy .env variable to .env file
+      run: |
+        echo "{{ secrets.ENV_VARIABLES }}" >> .env
+
+    - name: Zip project
+      run: |
+        zip -r project.zip .
+
+    - name: Upload artifact to EC2
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
+        key: ${{ secrets.EC2_KEY }}
+        source: project.zip
+        target: /tmp/project.zip
+
+    - name: Unzip project on EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "unzip /tmp/project.zip -d /home/ubuntu/project"
+    
+    - name: Run docker compose
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd /home/ubuntu/project && docker compose up --scale web=2 --no-deps --no-recreate -d && sleep 10 && docker compose -f up --scale web=1 --no-deps -d"
