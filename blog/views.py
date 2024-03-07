@@ -30,7 +30,7 @@ class BlogDetailViewset(generics.ListAPIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'blog_detail.html'
 
-    def retrieve(self, request, *args, **kwargs):
+    def list(self, request, *args, **kwargs):
         # # Worst run
         # queryset = Blog.objects.all()
 
