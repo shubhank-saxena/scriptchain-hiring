@@ -13,6 +13,7 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", default="")
 DEBUG = bool(os.getenv("DJANGO_DEBUG", "False"))
 
 ALLOWED_HOSTS = ["*"]
+INTERNAL_IPS = ["127.0.0.1", "localhost"]
 
 RUN_MIGRATIONS = True
 
@@ -25,6 +26,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # third party apps
+    'rest_framework',
+    'debug_toolbar',
     
     # django apps
     'authentication',
@@ -33,6 +38,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -137,6 +143,5 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
     ],
-    "EXCEPTION_HANDLER": "webapp.utils.service_unavailable_handler",
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }

@@ -33,7 +33,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     # App base urls
     path("v1/user", include("authentication.urls")),
-    path("v1/blog", include("blog.urls")),
+    path("v1/", include("blog.urls")),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
 
 if settings.DEBUG:

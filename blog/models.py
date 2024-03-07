@@ -3,8 +3,10 @@ from django.conf import settings
 
 # Create your models here.
 class BlogAuthor(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     bio = models.TextField()
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     subscribers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="subscriptions")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -13,9 +15,10 @@ class BlogAuthor(models.Model):
         return self.name
 
 class Blog(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=100)
     content = models.TextField()
-    author = models.ForeignKey(BlogAuthor, on_delete=models.CASCADE)
+    author = models.ForeignKey(BlogAuthor, on_delete=models.CASCADE, related_name="blog_author")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -23,6 +26,7 @@ class Blog(models.Model):
         return self.title
 
 class Comment(models.Model):
+    id = models.AutoField(primary_key=True)
     content = models.TextField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
