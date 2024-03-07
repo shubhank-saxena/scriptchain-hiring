@@ -53,19 +53,17 @@ jobs:
       run: |
         ls -la
 
-    - name: Upload artifact to EC2
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_KEY }}
-        source: project.zip
-        target: /tmp
-
-    - name: SSH and unzip
+    - name: Convert pem file
       run: |
         echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
         chmod 600 ec2_key.pem
+
+    - name: Upload artifact to EC2
+      run: |
+        scp -o StrictHostKeyChecking=no -i ec2_key.pem project.zip ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/tmp
+
+    - name: SSH and unzip
+      run: |
         ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "unzip /tmp/project.zip -d /home/ubuntu/project"
     
     - name: Run docker compose
