@@ -43,7 +43,7 @@ jobs:
 
     - name: Copy .env variable to .env file
       run: |
-        echo "{{ secrets.ENV_VARIABLES }}" >> .env
+        echo "${{ secrets.ENV_VARIABLES }}" >> .env
 
     - name: Zip project
       run: |
