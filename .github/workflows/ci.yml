@@ -62,17 +62,11 @@ jobs:
         source: project.zip
         target: /tmp/project.zip
 
-    - name: See temp files
-      run: |
-        echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
-        chmod 600 ec2_key.pem
-        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "ls -la /tmp"
-
     - name: SSH and unzip
       run: |
         echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
         chmod 600 ec2_key.pem
-        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "sudo apt-get install zip unzip && unzip /tmp/project.zip -d /home/ubuntu/project"
+        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "sudo apt-get install zip unzip && unzip  ls -la /tmp && /tmp/project.zip -d /home/ubuntu/project"
     
     - name: Run docker compose
       run: |
