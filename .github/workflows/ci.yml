@@ -64,7 +64,9 @@ jobs:
 
     - name: See temp files
       run: |
-        ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_KEY }} ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "ls -la /tmp"
+        echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
+        chmod 600 ec2_key.pem
+        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "ls -la /tmp"
 
     - name: SSH and unzip
       run: |
