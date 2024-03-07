@@ -64,7 +64,7 @@ jobs:
 
     - name: SSH and unzip
       run: |
-        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "unzip /tmp/project.zip -d /home/ubuntu/project"
+        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "unzip -o /tmp/project.zip -d /home/ubuntu/project"
     
     - name: Run docker compose
       run: |
