@@ -60,7 +60,7 @@ jobs:
 
     - name: Upload artifact to EC2
       run: |
-        scp -o StrictHostKeyChecking=no -i ec2_key.pem project.zip ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/tmp/
+        scp -o StrictHostKeyChecking=no -i ec2_key.pem project.zip ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/tmp
 
     - name: SSH and unzip
       run: |
