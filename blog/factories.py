@@ -1,13 +1,18 @@
 import factory
 from factory.django import DjangoModelFactory
 
-from blog.models import Blog, Comment, BlogAuthor
 from authentication.factories import UserFactory
+from blog.models import Blog, BlogAuthor, Comment
+
 
 class BlogAuthorFactory(DjangoModelFactory):
+    """Blog author factory."""
+
     class Meta:
+        """Meta class."""
+
         model = BlogAuthor
-    
+
     name = factory.Faker("company")
     bio = factory.Faker("text")
     created_by = factory.SubFactory(UserFactory)
@@ -27,16 +32,26 @@ class BlogAuthorFactory(DjangoModelFactory):
             for _ in range(3):
                 self.subscribers.add(UserFactory())
 
+
 class BlogFactory(DjangoModelFactory):
+    """Blog factory."""
+
     class Meta:
+        """Meta class."""
+
         model = Blog
 
     title = factory.Faker("sentence")
     content = factory.Faker("text")
     author = factory.SubFactory(BlogAuthorFactory)
 
+
 class CommentFactory(DjangoModelFactory):
+    """Comment factory."""
+
     class Meta:
+        """Meta class."""
+
         model = Comment
 
     content = factory.Faker("text")

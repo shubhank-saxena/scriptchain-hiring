@@ -1,16 +1,19 @@
 import random
 
-from django.db import transaction
 from django.core.management.base import BaseCommand
+from django.db import transaction
 
-from authentication.models import User
-from blog.models import Blog, Comment, BlogAuthor
 from authentication.factories import UserFactory
-from blog.factories import BlogFactory, CommentFactory, BlogAuthorFactory
+from authentication.models import User
+from blog.factories import BlogAuthorFactory, BlogFactory, CommentFactory
+from blog.models import Blog, BlogAuthor, Comment
 
 
 class Command(BaseCommand):
+    """Command to generate random data."""
+
     help = "Generates random data"
+
     @transaction.atomic
     def handle(self, *args, **kwargs):
         self.stdout.write("Deleting old data...")

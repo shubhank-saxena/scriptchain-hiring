@@ -1,5 +1,6 @@
 from django.urls import path
-from blog.views import BlogViewset, BlogDetailViewset, BlogSearchViewset
+
+from blog.views import BlogDetailViewset, BlogSearchViewset, BlogViewset
 
 urlpatterns = [
     path("home", BlogViewset.as_view(), name="home"),

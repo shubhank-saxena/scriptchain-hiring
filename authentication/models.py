@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 
+
 class UserManager(BaseUserManager):
     """Custom user model manager."""
 
