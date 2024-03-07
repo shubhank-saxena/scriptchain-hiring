@@ -66,7 +66,7 @@ jobs:
       run: |
         echo "${{ secrets.EC2_KEY }}" > ec2_key.pem
         chmod 600 ec2_key.pem
-        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "sudo apt-get install zip unzip && unzip  ls -la /tmp && /tmp/project.zip -d /home/ubuntu/project"
+        ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "ls -la /tmp && unzip /tmp/project.zip -d /home/ubuntu/project"
     
     - name: Run docker compose
       run: |
